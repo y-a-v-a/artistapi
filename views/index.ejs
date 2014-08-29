@@ -6,6 +6,18 @@
   </head>
   <body>
     <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <p><%= message %></p>
+    <% if (typeof key !== 'undefined') { %>
+        <%= key %>
+    <% } %>
+    <form action="/api/register" method="post">
+        <input name="fqdn" type="text" value="" placeholder="Your FQDN here">
+        <input type="submit">
+    </form>
+    
+    <form action="/api/v1/addartist" method="post">
+        <input name="artist" type="text" value="" placeholder="Artist name">
+        <input type="submit">
+    </form>
   </body>
 </html>
