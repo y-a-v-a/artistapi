@@ -1,8 +1,10 @@
 #!/usr/bin/env node
+var env = process.env.NODE_ENV || "development";
 var debug = require('debug')('artistapi');
 var app = require('../app');
+var config = require('../conf/config')[env];
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || config.server.port);
 
 var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);

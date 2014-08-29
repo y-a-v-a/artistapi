@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "decrypt": "decrypt conf/config.js.cast5 conf/config.js",
+    "encrypt": "encrypt conf/config.js conf/config.js.cast5"
   },
   "dependencies": {
     "express": "~4.2.0",
