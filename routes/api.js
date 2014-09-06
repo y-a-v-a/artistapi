@@ -42,8 +42,7 @@ router.route('/v1/register').get(function(req, res) {
     res.redirect('/');
 }).post(function(req, res, next) {
     if (typeof req.body === 'undefined' ||
-            typeof req.body.fqdn === 'undefined' ||
-            req.body.fqdn.length === 0) {
+            !validateFqdn(req.body.fqdn)) {
         var err = new Error('Empty or missing FQDN');
         next(err);
     }
@@ -67,7 +66,7 @@ router.route('/v1/register').get(function(req, res) {
     data['fqdn'] = req.body.fqdn;
     data['registered'] = now;
     data['requests'] = 0;
-    data['key'] = api.getKey(req.body.fqdn, now);
+    data['key'] = api.generateKey(req.body.fqdn, now);
     data['allowed'] = true;
 
     req.db.accounts.save(data, function(error, row) {
@@ -94,3 +93,9 @@ router.route('/v1/addartist').get(function(req, res) {
 });
 
 module.exports = router;
+
+var validateFqdn = function(fqdn) {
+    return typeof fqdn !== 'undefined' && fqdn.length > 0 && /^(?=.{1,254}$)((?=[a-z0-9-]{1,63}\.)(xn--)?[a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,63}$/.test(fqdn);
+};
+
+module.exports.validateFqdn = validateFqdn;
