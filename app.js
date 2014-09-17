@@ -8,18 +8,10 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var api = require('./routes/api');
 
-var mongoskin = require('mongoskin');
+var app = module.exports.app = express();
 
-var app = express();
+app.locals.title = 'a_r_s';
 
-var db = mongoskin.db('mongodb://localhost:27017/artistapi?auto_reconnect', { safe: true });
-
-app.use(function(req, res, next) {
-  req.db = {};
-  req.db.artists = db.collection('artists');
-  req.db.accounts = db.collection('accounts');
-  next();
-})
 app.set('env', process.env.NODE_ENV || "development");
 
 // view engine setup
@@ -29,7 +21,7 @@ app.set('view engine', 'ejs');
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

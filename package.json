@@ -1,6 +1,10 @@
 {
   "name": "artistapi",
   "version": "0.0.1",
+  "description" : "Artist REST Api is a simple webapp for getting random arist names made in Express",
+  "homepage" : "http://ars.y-a-v-a.org",
+  "license" : "MIT",
+  "author" : "Vincent Bruijn <vebruijn@gmail.com> (http://www.y-a-v-a.org)",
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
@@ -8,13 +12,13 @@
     "encrypt": "encrypt conf/config.js conf/config.js.cast5"
   },
   "dependencies": {
-    "express": "~4.2.0",
-    "static-favicon": "~1.0.0",
-    "morgan": "~1.0.0",
-    "cookie-parser": "~1.0.1",
-    "body-parser": "~1.0.0",
+    "express": "~4.9.0",
+    "serve-favicon": "~2.1.4",
+    "morgan": "~1.3.1",
+    "cookie-parser": "~1.3.3",
+    "body-parser": "~1.8.2",
     "debug": "~0.7.4",
-    "ejs": "~0.8.5",
+    "ejs": "~1.0.0",
     "mongoskin": "~1.4.4"
   },
   "devDependencies": {

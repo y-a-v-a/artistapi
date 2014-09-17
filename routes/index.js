@@ -3,8 +3,7 @@ var router = express.Router();
 
 router.get('/', function(req, res) {
   res.render('index', {
-      title: 'R.A.A.C.',
-      message: 'Welcome to the one and only REST Artist API client'
+      message: 'Welcome to the one and only free Artist REST Service'
   });
 });
 

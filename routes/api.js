@@ -13,14 +13,15 @@ router.route('/v1').all(function(req, res) {
 router.route('/v1/getartist').get(function(req, res, next) {
     var key = req.param('key');
     var data = {};
-
-    req.db.accounts.find({ 'key': key }).toArray(function(error, rows) {
+    
+    api.validateKey(key, function(err, rows) {
         if (rows.length === 1) {
             next();
         } else {
             data.message = 'Bad request';
             data.code = 400;
-            res.send(data.code, JSON.stringify(data));
+            res.status(data.code).send(JSON.stringify(data));
+            return;
         }
     });
 }).get(function(req, res) {
@@ -29,12 +30,12 @@ router.route('/v1/getartist').get(function(req, res, next) {
     });
     var data = {};
 
-    api.getArtist(req, function(err, item) {
+    api.getArtist(function(err, item) {
         if (err) console.log(err);
         data.artist = item;
         data.code = 200;
         data.message = 'Succes';
-        res.send(data.code, JSON.stringify(data));
+        res.status(data.code).send(JSON.stringify(data));
     });
 });
 
@@ -43,17 +44,21 @@ router.route('/v1/register').get(function(req, res) {
 }).post(function(req, res, next) {
     if (typeof req.body === 'undefined' ||
             !validateFqdn(req.body.fqdn)) {
-        var err = new Error('Empty or missing FQDN');
-        next(err);
+        //var err = new Error('Empty or missing FQDN');
+        // next(err);
+        console.log('Incorrect fqdn: ' + req.body.fqdn);
+        res.render('index', {
+            message: 'Incorrect FQDN. Try again, if you please.'
+        });
+        return;
     }
     next();
 }).post(function(req, res, next) {
     var fqdn = req.body.fqdn;
-    req.db.accounts.find({ 'fqdn': fqdn }).toArray(function(error, rows) {
+    api.fqdnExists(fqdn, function(error, rows) {
         if (rows.length > 0) {
             res.render('index', {
-                title: 'R.A.A.C.',
-                message: 'Already registered',
+                message: 'Already registered for ' + fqdn + '. Keep on using it!',
                 key: rows[0].key
             });
         } else {
@@ -68,25 +73,33 @@ router.route('/v1/register').get(function(req, res) {
     data['requests'] = 0;
     data['key'] = api.generateKey(req.body.fqdn, now);
     data['allowed'] = true;
-
-    req.db.accounts.save(data, function(error, row) {
+    
+    api.registerFqdn(data, function(error, row) {
         res.render('index', {
-            title: 'R.A.A.C.',
-            message: 'Registered!',
+            message: 'Registration complete! Go use the key wisely.',
             key: row.key
         });
-    });    
+    });
 });
 
 router.route('/v1/addartist').get(function(req, res) {
     res.redirect('/');
 }).post(function(req, res) {
     var name = req.body.artist;
-    api.addArtist(req, name, function(err) {
+    if (name.length <= 3) {
+        res.render('index', {
+            message: 'Artist name empty or too short. Not good.'
+        });
+        return;
+    }
+    api.addArtist(name, function(err) {
         if (!err) {
             res.render('index', {
-                title: 'R.A.A.C.',
-                message: 'Artist saved'
+                message: 'Artist saved. Good for you!'
+            });
+        } else {
+            res.render('index', {
+               message: name + ' is already in database. No need to add again.' 
             });
         }
     });

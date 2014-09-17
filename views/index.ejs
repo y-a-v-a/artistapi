@@ -5,17 +5,19 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
+    <h1><a href="/"><%= title %></a></h1>
     <p><%= message %></p>
     <% if (typeof key !== 'undefined') { %>
-        <%= key %>
+        <p>Your API-key: <%= key %></p>
     <% } %>
     <form action="/api/v1/register" method="post">
+        Request an API key
         <input name="fqdn" type="text" value="" placeholder="Your FQDN here">
         <input type="submit">
     </form>
     
     <form action="/api/v1/addartist" method="post">
+        Add an artist to the database
         <input name="artist" type="text" value="" placeholder="Artist name">
         <input type="submit">
     </form>
