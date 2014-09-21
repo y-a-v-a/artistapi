@@ -44,4 +44,24 @@ describe('validateKey', function() {
         var key = api.generateKey('www.google.com', now);
         assert.equal('8fbaa165d8d0ebae6c16d495b15c381a893782ab34280a0aa70dc539f4081971', key);
     });
+
+    var tonight = new Date();
+    tonight.setHours(24);
+    tonight.setMinutes(0);
+    tonight.setSeconds(0);
+    tonight.setMilliseconds(0);
+    
+    it('should return -1 when time is ' + tonight.toString() + ' and count is 10000', function() {
+        assert.equal(-1, api.updateCounter(tonight.valueOf(), 10000));
+    });
+    
+    it('shoud return 13 when time is ' + tonight.toString() + ' and count is 12', function() {
+        assert.equal(13, api.updateCounter(tonight.valueOf(), 12));
+    });
+
+    it('should return 0 when time is last midnight and count is 12' , function() {
+        tonight.setDate(tonight.getDate() - 1);
+        assert.equal(0, api.updateCounter(tonight.valueOf(), 12));
+    });
+    
 });
