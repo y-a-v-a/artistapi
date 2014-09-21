@@ -1,5 +1,7 @@
-artistapi
-=========
+artistapi a.k.a. A.R.S.
+=======================
+
+A.R.S. is Artist REST Service.
 
 Tiny NodeJS based web app returning a random artist name in JSON format
 

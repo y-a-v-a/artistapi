@@ -1,7 +1,7 @@
 {
   "name": "artistapi",
   "version": "0.0.1",
-  "description" : "Artist REST Api is a simple webapp for getting random arist names made in Express",
+  "description" : "Artist REST Service A.R.S. is a simple webapp for getting random arist names made in Express",
   "homepage" : "http://ars.y-a-v-a.org",
   "license" : "MIT",
   "author" : "Vincent Bruijn <vebruijn@gmail.com> (http://www.y-a-v-a.org)",
