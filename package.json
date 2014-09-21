@@ -9,7 +9,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "decrypt": "decrypt conf/config.js.cast5 conf/config.js",
-    "encrypt": "encrypt conf/config.js conf/config.js.cast5"
+    "encrypt": "encrypt conf/config.js conf/config.js.cast5",
+    "import-artists": "cd bin && node ./batch.js ./artists.json"
   },
   "dependencies": {
     "express": "~4.9.0",
