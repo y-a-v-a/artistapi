@@ -99,7 +99,7 @@ router.route('/v1/register').get(function(req, res) {
 
 router.route('/v1/addartist').get(function(req, res) {
     res.redirect('/');
-}).post(function(req, res) {
+});/*.post(function(req, res) {
     var name = req.body.artist;
     if (name.length <= 3) {
         res.render('index', {
@@ -118,7 +118,7 @@ router.route('/v1/addartist').get(function(req, res) {
             });
         }
     });
-});
+});*/
 
 module.exports = router;
 
