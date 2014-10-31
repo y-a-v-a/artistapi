@@ -10,7 +10,7 @@ var api = require('./routes/api');
 
 var app = module.exports.app = express();
 
-app.locals.title = 'a_r_s';
+app.locals.title = 'a•r•s';
 
 app.set('env', process.env.NODE_ENV || "development");
 
